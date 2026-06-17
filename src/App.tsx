@@ -4,30 +4,27 @@ import { CoinInfo } from './CoinInfo'
 import { AwesomeButton } from 'react-awesome-button'
 import ReactLoading from 'react-loading'
 import { useEffect, useState } from 'react'
-import { ConnectButton, useWalletKit } from '@mysten/wallet-kit'
-import { SuiClient, getFullnodeUrl } from '@mysten/sui.js/client'
-import { TransactionBlock } from '@mysten/sui.js/transactions'
+import { ConnectButton, useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit'
+import { Transaction } from '@mysten/sui/transactions'
 
 function App() {
-  const wallet = useWalletKit();
+  const account = useCurrentAccount()
   const [isLoading, setIsLoading] = useState(false);
   const [coinList, setCoinList] = useState<CoinInfo[]>([]);
   const [logs, setLogs] = useState<string>();
   const [isMerging, setIsMerging] = useState(false);
   const [selectedCoin, setSelectedCoin] = useState('');
-  const client = new SuiClient({
-    url: getFullnodeUrl('mainnet'),
-  });
-
+  const client = useSuiClient()
+  const { mutate } = useSignAndExecuteTransaction();
   async function getAllBalances() {
     setIsLoading(true);
     setCoinList([]);
     setSelectedCoin('');
     setLogs('');
-    if (wallet.currentAccount?.address != null) {
+    if (account?.address != null) {
       const updatedCoinList: CoinInfo[] = [];
       try {
-        const allBalances = await client.getAllBalances({ owner: wallet.currentAccount?.address });
+        const allBalances = await client.getAllBalances({ owner: account.address });
 
         for (const coin of allBalances) {
           const coinMetadata = await client.getCoinMetadata({ coinType: coin.coinType });
@@ -55,11 +52,8 @@ function App() {
   }
 
   async function handleMergeClick() {
-    if (!wallet.isConnected) { alert('Please connect wallet first'); return; }
-
-    if (wallet.currentAccount?.address == null) { alert('Error connecting to wallet, please reconnect'); return; }
-
-    const tx = new TransactionBlock();
+    if (account?.address == null) { alert('Error connecting to wallet, please reconnect'); return; }
+    const tx = new Transaction();
     const coinObjectIds = [];
     let cursor = null;
 
@@ -67,7 +61,7 @@ function App() {
     setLogs('Start getting data...');
     do {
       const objectListResponse = await client.getCoins({
-        owner: wallet.currentAccount.address,
+        owner: account.address,
         coinType: selectedCoin,
         cursor: cursor,
         limit: 100
@@ -92,18 +86,20 @@ function App() {
         try {
           setLogs(`Total of ${coinObjectIds.length} objects found and ready to merge. Please confirm at wallet`);
 
-          const result = await wallet.signAndExecuteTransactionBlock({
-            transactionBlock: tx,
-          });
-
-          if (!result.errors || result.errors.length === 0) {
-            setLogs(`Finish merging objects, digest: ${result.digest}`);
-          }
-          else {
-            const errorMessages = result.errors.join(', ');
-            setLogs(`${errorMessages}`);
-            console.log(`Error when merging objects, ${errorMessages}`);
-          }
+          await mutate(
+            {
+              transaction: tx,
+            },
+            {
+              onSuccess: (result) => {
+                setLogs(`Finish merging objects, digest: ${result.digest}`);
+              },
+              onError: (error) => {
+                setLogs(`${error}`);
+                console.log(`Error when merging objects, ${error}`);
+              }
+            }
+          );
         } catch (e) {
           setLogs(`${e}`);
           console.log(`Error when merging objects, ${e}`);
@@ -116,12 +112,12 @@ function App() {
 
   useEffect(() => {
     getAllBalances();
-  }, [wallet.currentAccount]);
+  }, [account]);
 
   return (
     <>
       <div>
-        <a href={wallet.currentAccount?.address ? "https://suiexplorer.com/address/" + wallet.currentAccount?.address : "https://suiexplorer.com"}
+        <a href={account?.address ? "https://suiexplorer.com/address/" + account?.address : "https://suiexplorer.com"}
           target="_blank">
           <img src="/assets/image/ProjectX-logo.png" className="logo sui" alt="Sui Explorer" />
         </a>
@@ -138,7 +134,7 @@ function App() {
       </div>
       <div className="card">
         <ConnectButton />
-        {!wallet.isConnected ? (
+        {!account?.address ? (
           <p style={{ color: 'red' }}>Please connect wallet first</p>
         ) : isLoading ? (
           <div className='box-loading'><ReactLoading color='#4CA2FF' type='bars' /></div>
