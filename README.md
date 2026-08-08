@@ -8,9 +8,17 @@ A tool to help you merge coins when there are too many objects that cannot be tr
 
 Currently the version that can be used directly on SUI Mainnet
 
+## Why this fork
+The upstream project ([cosinguyen/sui-merge-coin](https://github.com/cosinguyen/sui-merge-coin), now archived) stopped working after a Sui network upgrade: Sui Foundation fullnodes [deprecated JSON-RPC](https://docs.sui.io/develop/accessing-data/json-rpc-migration) (disabled on mainnet in July 2026), while the app relied on the official public JSON-RPC endpoints via `@mysten/sui` v1. Every balance query failed, so nothing could be merged.
+
+This fork fixes that:
+- Chain reads/writes go through a third-party JSON-RPC provider (default `https://mainnet.sui.rpcpool.com/`, configurable via `VITE_SUI_RPC_URL`)
+- Dependencies upgraded to `@mysten/sui` v2.x and `@mysten/dapp-kit` v1.x
+- Deployment moved to Cloudflare Workers static assets (`wrangler.jsonc`)
+
 ## RPC configuration
 - Any changes will be made at `/src/main.tsx`
-- Sui Foundation fullnodes [deprecated JSON-RPC](https://docs.sui.io/develop/accessing-data/json-rpc-migration) in July 2026, so this app talks to a third-party JSON-RPC provider instead (default: `https://mainnet.sui.rpcpool.com/`). Set your own endpoint via the `VITE_SUI_RPC_URL` env var (see `.env.example`) — no code change needed.
+- The RPC endpoint defaults to `https://mainnet.sui.rpcpool.com/`. Set your own via the `VITE_SUI_RPC_URL` env var (see `.env.example`) — no code change needed.
 - Change the environment or custom RPC:
 ```js
 <SuiClientProvider networks={networkConfig} defaultNetwork="mainnet">
