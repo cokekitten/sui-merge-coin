@@ -2,7 +2,7 @@ import './App.css'
 import 'react-awesome-button/dist/styles.css'
 import { CoinInfo } from './CoinInfo'
 import { AwesomeButton } from 'react-awesome-button'
-import ReactLoading from 'react-loading'
+import { Spinner } from './Spinner'
 import { useEffect, useState } from 'react'
 import { ConnectButton, useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit'
 import { Transaction } from '@mysten/sui/transactions'
@@ -137,7 +137,7 @@ function App() {
         {!account?.address ? (
           <p style={{ color: 'red' }}>Please connect wallet first</p>
         ) : isLoading ? (
-          <div className='box-loading'><ReactLoading color='#4CA2FF' type='bars' /></div>
+          <div className='box-loading'><Spinner /></div>
         ) : (
           <p>
             Please select a <code>Coin</code> that you want to merge
