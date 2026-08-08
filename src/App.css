@@ -285,6 +285,16 @@
   --dapp-kit-backgroundColors-dropdownMenu: #12141f !important;
   --dapp-kit-colors-body: #e8eef9 !important;
   --dapp-kit-colors-bodyMuted: #8b94a7 !important;
+  --dapp-kit-colors-bodyDanger: #ff6b6b !important;
+  --dapp-kit-backgroundColors-walletItemHover: rgba(255, 255, 255, 0.06) !important;
+  --dapp-kit-backgroundColors-walletItemSelected: rgba(76, 162, 255, 0.18) !important;
+  --dapp-kit-backgroundColors-iconButton: rgba(255, 255, 255, 0.08) !important;
+  --dapp-kit-backgroundColors-iconButtonHover: rgba(255, 255, 255, 0.14) !important;
+  --dapp-kit-colors-iconButton: #e8eef9 !important;
+  --dapp-kit-backgroundColors-dropdownMenuSeparator: rgba(255, 255, 255, 0.08) !important;
+  --dapp-kit-borderColors-outlineButton: rgba(255, 255, 255, 0.12) !important;
+  --dapp-kit-colors-outlineButton: #e8eef9 !important;
+  --dapp-kit-backgroundColors-outlineButtonHover: rgba(255, 255, 255, 0.06) !important;
 }
 
 /* ---------- footer ---------- */
