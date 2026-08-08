@@ -173,7 +173,7 @@ function App() {
           <div className="brand-mark">◆</div>
           <div>
             <h1 className="brand-title">$SUI Merge Coins</h1>
-            <p className="brand-sub">合并碎片 Coin 对象 · 回收存储 rebate</p>
+            <p className="brand-sub">Merge fragmented coin objects · reclaim storage rebates</p>
           </div>
         </a>
         <ConnectButton />
@@ -195,7 +195,7 @@ function App() {
         ) : (
           <>
             <div className="card-label" style={{ justifyContent: 'space-between' }}>
-              <span>选择币种{selectedCoin && <span className="dot"> ●</span>}</span>
+              <span>Select coin{selectedCoin && <span className="dot"> ●</span>}</span>
               <button disabled={busy} className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: '12px' }} onClick={getAllBalances}>
                 ⟳ Reload
               </button>

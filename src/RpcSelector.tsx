@@ -20,7 +20,7 @@ export function RpcSelector() {
   return (
     <div className="glass-card">
       <div className="card-label">
-        RPC 节点<span className="dot">●</span>
+        RPC Node<span className="dot">●</span>
       </div>
       <div className="coin-grid">
         {RPC_PRESETS.map((preset) => (
@@ -37,7 +37,7 @@ export function RpcSelector() {
           onClick={() => setShowCustom(!showCustom)}
           className={`chip${showCustom && !isPreset ? ' selected' : ''}`}
         >
-          <span className="chip-symbol">自定义</span>
+          <span className="chip-symbol">Custom</span>
           {showCustom && !isPreset && <span>✓</span>}
         </button>
       </div>
@@ -51,11 +51,11 @@ export function RpcSelector() {
             className="rpc-input"
           />
           <button onClick={() => apply(custom)} className="btn btn-primary" style={{ padding: '9px 16px' }}>
-            应用
+            Apply
           </button>
         </div>
       )}
-      <div className="rpc-current">当前: {active}</div>
+      <div className="rpc-current">Current: {active}</div>
     </div>
   )
 }
