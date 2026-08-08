@@ -117,7 +117,7 @@ function App() {
   return (
     <>
       <div>
-        <a href={account?.address ? "https://suiexplorer.com/address/" + account?.address : "https://suiexplorer.com"}
+        <a href={account?.address ? "https://suiscan.xyz/mainnet/address/" + account?.address : "https://suiscan.xyz/mainnet"}
           target="_blank">
           <img src="/assets/image/ProjectX-logo.png" className="logo sui" alt="Sui Explorer" />
         </a>
@@ -177,7 +177,7 @@ function App() {
             <>
               {logs.split('digest: ')[1] && (
                 <a
-                  href={`https://suiexplorer.com/txblock/${logs.split('digest: ')[1]}`}
+                  href={`https://suiscan.xyz/mainnet/tx/${logs.split('digest: ')[1]}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -191,7 +191,7 @@ function App() {
         </p>
       </div>
       <div>
-        You can find the code on <a href="https://github.com/cosinguyen/sui-merge-coin" target="_blank">
+        You can find the code on <a href="https://github.com/cokekitten/sui-merge-coin" target="_blank">
           Github
         </a>
       </div>

@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "sui-merge-coin",
+  "compatibility_date": "2026-08-01",
+  // Pure static SPA: serve the Vite build output via Workers Static Assets.
+  // Signing happens client-side in the wallet, no Worker code needed.
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
