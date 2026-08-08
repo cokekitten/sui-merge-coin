@@ -1,41 +1,310 @@
-#root {
-  max-width: 1280px;
+.app {
+  max-width: 640px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 40px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.logo {
-  height: 10em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* ---------- header ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.card {
-  padding: 2em;
-}
-
-.code {
-  font-weight: 700;
-  font-family: var(--font-mono);
-}
-
-.select-coin {
-  font-size: 16px;
+.brand-mark {
+  width: 40px;
   height: 40px;
-  width: 350px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 6px 20px rgba(76, 162, 255, 0.4);
 }
 
+.brand-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #fff 30%, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-sub {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* ---------- glass card ---------- */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 22px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.card-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+.card-label .dot {
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.intro {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+.intro code,
+.inline-code {
+  background: rgba(76, 162, 255, 0.12);
+  color: var(--accent);
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 0.92em;
+}
+
+/* ---------- coin chips ---------- */
+.coin-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-dim);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.chip:hover:not(:disabled) {
+  border-color: rgba(76, 162, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chip.selected {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(76, 162, 255, 0.35);
+}
+
+.chip-symbol {
+  font-weight: 600;
+}
+
+.chip-balance {
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.chip-count {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(255, 107, 107, 0.15);
+  color: var(--danger);
+}
+
+.chip.selected .chip-count {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+/* ---------- buttons ---------- */
+.btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn {
+  padding: 12px 22px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(76, 162, 255, 0.35);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(76, 162, 255, 0.45);
+}
+
+.btn-ghost {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+  color: var(--text);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--glass-bg-strong);
+}
+
+/* ---------- status / logs ---------- */
+.hint {
+  margin: 0;
+  font-size: 13px;
+}
+
+.hint.ok {
+  color: var(--success);
+}
+
+.hint.info {
+  color: var(--accent);
+}
+
+.hint.warn {
+  color: var(--danger);
+}
+
+.log-line {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  font-family: 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+  color: var(--text-dim);
+  word-break: break-all;
+}
+
+.log-line.error {
+  color: var(--danger);
+}
+
+.log-line a {
+  color: var(--accent);
+}
+
+/* ---------- loading ---------- */
 .box-loading {
   display: flex;
   justify-content: center;
+  padding: 24px 0;
 }
 
-.reload-button {
-  padding-left: 10px;
+/* ---------- RPC panel ---------- */
+.rpc-current {
+  margin-top: 12px;
+  font-size: 11px;
+  color: rgba(139, 148, 167, 0.7);
+  word-break: break-all;
+}
+
+.rpc-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.rpc-input {
+  flex: 1;
+  padding: 9px 12px;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  outline: none;
+}
+
+.rpc-input:focus {
+  border-color: rgba(76, 162, 255, 0.5);
+}
+
+/* ---------- dapp-kit theme overrides ---------- */
+[data-dapp-kit] {
+  --dapp-kit-radii-small: 10px !important;
+  --dapp-kit-radii-medium: 12px !important;
+  --dapp-kit-radii-large: 14px !important;
+  --dapp-kit-radii-xlarge: 16px !important;
+  --dapp-kit-backgroundColors-primaryButton: #4ca2ff !important;
+  --dapp-kit-backgroundColors-primaryButtonHover: #63b1ff !important;
+  --dapp-kit-colors-primaryButton: #fff !important;
+  --dapp-kit-shadows-primaryButton: 0 8px 24px rgba(76, 162, 255, 0.35) !important;
+  --dapp-kit-typography-fontFamily: inherit !important;
+  --dapp-kit-backgroundColors-modalPrimary: #12141f !important;
+  --dapp-kit-backgroundColors-modalSecondary: #1a1d2b !important;
+  --dapp-kit-backgroundColors-dropdownMenu: #12141f !important;
+  --dapp-kit-colors-body: #e8eef9 !important;
+  --dapp-kit-colors-bodyMuted: #8b94a7 !important;
+}
+
+/* ---------- footer ---------- */
+.app-footer {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(139, 148, 167, 0.6);
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding: 24px 14px 48px;
+  }
+
+  .glass-card {
+    padding: 18px;
+  }
+
+  .btn {
+    flex: 1;
+    text-align: center;
+  }
 }

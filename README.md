@@ -4,7 +4,12 @@
 A tool to help you merge coins when there are too many objects that cannot be transferred or swapped for other coins
 - Building on [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/) and [Vite](https://vitejs.dev/)
 - Use packages [@mysten/sui](https://www.npmjs.com/package/@mysten/sui) (v2.x) and [@mysten/dapp-kit](https://www.npmjs.com/package/@mysten/dapp-kit) (v1.x)
-- Some components of the user interface: [react-awesome-button](https://github.com/rcaferati/react-awesome-button) and [react-loading](https://github.com/fakiolinho/react-loading)
+
+Features:
+- Flat coin picker with balances and object counts (no dropdown hunting)
+- **Auto Merge**: batches of up to 500 objects signed one after another until everything is merged
+- RPC endpoint switchable on the page (presets + custom, saved to localStorage)
+- On-screen error reporting so failures never show a blank page
 
 Currently the version that can be used directly on SUI Mainnet
 
@@ -17,8 +22,8 @@ This fork fixes that:
 - Deployment moved to Cloudflare Workers static assets (`wrangler.jsonc`)
 
 ## RPC configuration
-- Any changes will be made at `/src/main.tsx`
-- The RPC endpoint defaults to `https://mainnet.sui.rpcpool.com/`. Set your own via the `VITE_SUI_RPC_URL` env var (see `.env.example`) — no code change needed.
+- Any changes will be made at `/src/main.tsx` and `/src/rpc.ts`
+- The RPC endpoint can be changed directly on the page (stored in `localStorage`), or via the `VITE_SUI_RPC_URL` env var at build time (see `.env.example`). Default: `https://mainnet.sui.rpcpool.com/`
 - Change the environment or custom RPC:
 ```js
 <SuiClientProvider networks={networkConfig} defaultNetwork="mainnet">

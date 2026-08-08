@@ -6,6 +6,7 @@ import { createNetworkConfig, SuiClientProvider, WalletProvider } from '@mysten/
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@mysten/dapp-kit/dist/index.css';
 import { ErrorBoundary } from './ErrorBoundary.tsx';
+import { getActiveRpcUrl } from './rpc.ts';
 
 // Surface fatal errors on screen (in-app wallet browsers have no devtools).
 function showFatalOverlay(text: string) {
@@ -29,9 +30,8 @@ window.addEventListener('unhandledrejection', (e) => {
 // NOTE (2026-08): Sui Foundation fullnodes no longer serve JSON-RPC
 // (deprecated week of 2026-07-27, code removal planned mid-October 2026).
 // The app must point at a third-party JSON-RPC provider instead.
-// Override with the VITE_SUI_RPC_URL env var (see .env.example).
-const mainnetRpcUrl: string =
-	import.meta.env.VITE_SUI_RPC_URL || 'https://mainnet.sui.rpcpool.com/';
+// Priority: localStorage (picked on the page) > VITE_SUI_RPC_URL > preset default.
+const mainnetRpcUrl: string = getActiveRpcUrl();
 
 const { networkConfig } = createNetworkConfig({
 	mainnet: { url: mainnetRpcUrl, network: 'mainnet' },
